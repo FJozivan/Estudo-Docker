@@ -90,4 +90,43 @@
 
 **OBS.: Cada imagem docker que é criada precisa do seu arquivo Dockerfile e isso em um projeto relativamente grande onde varias imagens com serviços diferentes precisam ser usadas pode ser muito trabalhoso por ter que estar mantendo essas configurações todas isoladas, mas para isso existe o docker-compose, com ele podemos configurar apenas uma arquivo *docker-compose.yml* para especificar as configurações das imagens docker que serão utilizadas no projeto, com esse arquivo inda podemos especificar todos os comandos que serão executados em terminal para cada maquina docker e sua ordem de execução com seus dados específicos, sendo assim é possível executar todo um projeto onde precisaremos executar o arquivos e todas os containers serão criados com suas respectivas configurações e ja serão executados diretamente**
 
-## Docker Compose ...
+## Docker Compose
+
+*O docker-composer funciona dentro do docker como um gerenciador de containers, onde é possível criar novos containers, configura-los e executa-los em um único lugar com uma sintaxe própria, como falado anteriormente isso é util para o caso onde temos um projeto com varias maquinas com serviços separados, pois isso ajuda a poder subir o projeto de uma forma mais simples*
+
+### Configurando um docker-compose.yml
+
+1. Criar um arquivo docker-compose.yml geralmente esse arquivo fica na raiz do projeto.
+    * Esse arquivo irá conter toda configuração com relação aos containers dockers pertencentes ao projeto.
+
+2. A primeira linha do arvo contem a versão do docker-compose que será utilizada.
+
+    > version "3.7
+
+3. Logo depois especificamos os serviços == CONTAINERS, para isso utilizados a palavra reservada **services:** e logo abaixo de forma indentada criaremos os containers como um nome de sua escolha **nome_container:** e logo abaixo seguindo o padrão de indentação segue as configurações relacionadas ao container como no exemplo abaixo:
+
+        version "3.7
+        services:
+            nome_container:
+                < Config_container >
+
+**OBS.: Na parte de configuração de um container dentro de um docker-compose.yml podemos referenciar um Dockerfile especifico de uma imagem docker que criamos ou podemos criar a configuração de imagem diretamente dentro do .yml**
+
+4. Clausulas de configuração de de um container:
+
+    * *image:* : define a imagem que será usada do DockerHub para subir o container.
+
+    * *container-name:* : define o nome do container a ser criado para a imagem
+
+    * *environment:* : Abaixo dessa para reservada seguindo o padrão de indentação deve ficar as variáveis de ambiente que podem ser configuradas para a imagem.
+
+    * *volumes:* : Com essa palavra reservada podemos especificar os volumes onde ficarão salvos as configurações feitas na maquina logo abaixo dessa palavra reservada de forma indentada cada nova linha iniciada co o caractere ( **-** ) devem ser referenciados os locais de dados que ficarão lincados da maquina local e do container por exemplo **- ./api/db/data:/var/lib/mysql**, utilizada para manter um estado da maquina sempre que a mesma for reiniciada.
+
+    * *restart:* :  É uma palavra reservada que indica quando container deve ser restartado, nesse caso quando seguido da palavra 'always' ele sempre será reiniciado caso ocorra algum problema com o container.
+
+    * *build:* É uma palavra reservada usada no inicio da configuração de um container para especificar uma configuração Dockerfile que esta em um local da maquina local específica, logo apos a palavra reservada deve ser indicada o local entre aspas de onde se encontra a configuração Dockerfile.
+        
+        * caso o arquivo Dockerfile esteja nomeado de forma diferente podemos usar a palavra reservada **context: nome_dockerfile**
+    * *ports:* : a palavra reservada seguido de uma indentação sendo que cada linha inicia com o caractere ( **-** ) + porta_maquina_local:porta_container, isso estabelece uma ligação entre as portas do container e as portas da maquina local onde podemos acessar os serviços que estão rodando no container pela porta da maquina local.
+
+    * *depends_on:* : a palavra reserva seguida da indentação sendo que cada linha inicia com o caractere ( **-** ) seguido do nome do container do qual o container que esta sendo criado depende. Essa configuração diz ao docker-compose que o container y depende do container x, sendo assim o container y so será executado quando o container y ja estiver em execução, é possível especificar que um container depende de vários containers.
