@@ -38,6 +38,8 @@
 
 5. Comando para ver as imagens docker disponíveis para uso.
 
+    > docker images
+
 6. Comando para executar a imagem:
 
     > docker run -d --rm --name mysql-container mysql-image
