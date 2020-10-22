@@ -87,6 +87,10 @@
 11. Comando para visualizar dados referente ao container
 
     > docker inspect nome_container
+
+12. Comando para visualizar os containers em execução:
+
+    > docker ps
     
 ### Curiosidades
 
