@@ -84,6 +84,10 @@
     * */var/lib/mysql* - Especifica onde esta a pasta mysql dentro do container
     * $(pwd)/api/db/data:/var/lib/mysql - especifica a referencia entre os dados da pasta da maquina e para onde devem ser enviados os dados na criação do container, dessa forma é como as duas ficam linkadas enquanto o o container estiver rodando logo toda configuração que for realizada na maquina container sera refletida nas pasta de dados da maquina, sendo assim quando o container for executado novamente os dados podem ser recuperados e usados.
 
+11. Comando para visualizar dados referente ao container
+
+    > docker inspect nome_container
+    
 ### Curiosidades
 
 *O docker cria uma rede que permite que uma maquina docker possa ser visualizada por outra maquina docker através dos seus IPs, mas é possível também fazer com que uma maquina visualize outra através do nome do container utilizando o comando **-link** seguido do nome do container do comando do item 6 que executa uma maquina que queremos que nosso container acesse através do nome*
